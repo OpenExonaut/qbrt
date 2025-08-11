@@ -68,7 +68,7 @@ Examples
   2. Run an app at a path.              $ qbrt run path/to/my/app/       
   3. Package an app for distribution.   $ qbrt package path/to/my/app/   
 
-  Project home: https://github.com/mozilla/qbrt
+  Project home: https://github.com/OpenExonaut/qbrt
 
     `.trim());
     tap.equal(code, 0, 'app exited with success code');

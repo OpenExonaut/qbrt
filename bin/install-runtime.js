@@ -35,7 +35,7 @@ const { getPlatformDirectories } = require('./directory-utils');
 const spawn = require('child_process').spawn;
 
 
-const downloadURLBase = 'https://download.mozilla.org/?product=firefox-nightly-latest-ssl&lang=en-US';
+// const downloadURLBase = 'https://download.mozilla.org/?product=firefox-nightly-latest-ssl&lang=en-US';
 
 const fileExtensions = {
   'application/x-apple-diskimage': 'dmg',
@@ -43,7 +43,7 @@ const fileExtensions = {
   'application/x-tar': 'tar.bz2',
 };
 
-function getDownloadOS(platform) {
+/*function getDownloadOS(platform) {
   switch (platform) {
     case 'win32':
       switch (process.arch) {
@@ -66,7 +66,7 @@ function getDownloadOS(platform) {
     case 'darwin':
       return 'osx';
   }
-}
+}*/
 
 function installRuntime(platform=process.platform) {
   let tempDir, mountPoint, filePath, fileStream;
@@ -104,7 +104,14 @@ function installRuntime(platform=process.platform) {
           }
         }).on('error', reject);
       }
-      download(`${downloadURLBase}&os=${getDownloadOS(platform)}`);
+      // download(`${downloadURLBase}&os=${getDownloadOS(platform)}`);
+
+      if (platform == 'win32') {
+        download('https://raw.githubusercontent.com/OpenExonaut/firefox-win32-zip/refs/heads/main/firefox-52.9.0esr.en-US.win32.zip');
+      }
+      else if (platform == 'darwin') {
+        download('https://download-installer.cdn.mozilla.net/pub/firefox/releases/52.9.0esr/mac/en-US/Firefox%2052.9.0esr.dmg');
+      }
     });
   })
   .then((response) => {
@@ -148,7 +155,7 @@ function installRuntime(platform=process.platform) {
         }
       })
       .then(() => {
-        const source = path.join(mountPoint, 'Firefox Nightly.app');
+        const source = path.join(mountPoint, 'Firefox.app');
         // Unlike Windows and Linux, where the destination is the parent dir,
         // on Mac the destination is the installation dir itself, because we've
         // already expanded the archive (DMG) and are copying the dir inside it.
@@ -182,7 +189,7 @@ function installRuntime(platform=process.platform) {
         }
       });
     }
-    else if (platform === 'linux') {
+    /*else if (platform === 'linux') {
       const source = filePath;
       const destination = distDir;
       return pify(fs.remove)(path.join(destination, 'runtime'))
@@ -192,7 +199,7 @@ function installRuntime(platform=process.platform) {
       .then(() => {
         return pify(fs.rename)(path.join(destination, 'firefox'), path.join(destination, 'runtime'));
       });
-    }
+    }*/
   })
   .then(() => {
     return installXULApp(platform);
@@ -219,9 +226,10 @@ function installRuntime(platform=process.platform) {
     const targetDir = path.join(resourcesDir, 'qbrt', 'defaults', 'preferences');
 
     const prefFiles = [
-      'debugger.js',
+      /*'debugger.js',
       'devtools-client.js',
-      'devtools-startup.js',
+      'devtools-startup.js',*/
+      'devtools.js'
     ];
 
     return Promise.all(prefFiles.map(file => pify(fs.copy)(path.join(sourceDir, file), path.join(targetDir, file))));
@@ -246,10 +254,10 @@ function installRuntime(platform=process.platform) {
           });
         });
       }
-      case 'linux': {
+      /*case 'linux': {
         // Copy the stub executable to the executable dir.
         return pify(fs.copy)(path.join(__dirname, '..', 'launcher.sh'), path.join(executableDir, 'launcher.sh'));
-      }
+      }*/
     }
   })
   .catch(error => {

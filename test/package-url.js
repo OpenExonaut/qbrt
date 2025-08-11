@@ -95,11 +95,11 @@ new Promise((resolve, reject) => {
       tap.equal(code, 0, 'app disk image (.dmg) detached');
     });
   }
-  else if (process.platform === 'linux') {
+  /*else if (process.platform === 'linux') {
     const source = 'shell.tgz';
     const destination = tempDir;
     return decompress(source, destination);
-  }
+  }*/
 })
 .then(() => {
   let executable, args = [], shell = false;
@@ -121,9 +121,9 @@ new Promise((resolve, reject) => {
     case 'darwin':
       executable = path.join(appDir, 'Contents', 'MacOS', 'shell');
       break;
-    case 'linux':
+    /*case 'linux':
       executable = path.join(appDir, 'shell');
-      break;
+      break;*/
   }
 
   return new Promise((resolve, reject) => {

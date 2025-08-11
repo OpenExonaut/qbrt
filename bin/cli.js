@@ -154,10 +154,10 @@ function runApp() {
           executableArgs.unshift(executable, '--');
           executable = 'lldb';
           break;
-        case 'linux':
+        /*case 'linux':
           executableArgs.unshift('--args', executable);
           executable = 'gdb';
-          break;
+          break;*/
       }
       spawnOptions.stdio = 'inherit';
     }
@@ -188,22 +188,22 @@ function packageApp() {
   const optionDefinitions = [
     { name: 'path', alias: 'p', type: String, defaultOption: true, defaultValue: argv[0] || process.cwd() },
     { name: 'win', type: Boolean },
-    { name: 'linux', type: Boolean },
+    //{ name: 'linux', type: Boolean },
   ];
   const options = commandLineArgs(optionDefinitions, { argv: argv });
   const shellDir = path.join(__dirname, '..', 'shell');
   const appSourceDir = fs.existsSync(options.path) ? path.resolve(options.path) : shellDir;
 
   let platform = process.platform;
-  if (options.win && options.linux) {
+  /*if (options.win && options.linux) {
     throw new Error('Cannot package windows and linux packages simultaneously.');
-  }
+  }*/
   if (options.win) {
     platform = 'win32';
   }
-  if (options.linux) {
+  /*if (options.linux) {
     platform = 'linux';
-  }
+  }*/
   const { installDir } = getPlatformDirectories(platform);
 
   let appName;
@@ -243,7 +243,7 @@ function packageApp() {
     appName = appPackageJson.name;
     appVersion = appPackageJson.version;
     packageFile = `${appName}.` + (appVersion ? `v${appVersion}.` : '') +
-      { win32: 'zip', darwin: 'dmg', linux: 'tgz' }[platform];
+      { win32: 'zip', darwin: 'dmg'/*, linux: 'tgz'*/ }[platform];
     cli.spinner(`  Packaging ${options.path} -> ${packageFile} …`);
     return appPackageJson;
   })
@@ -327,7 +327,7 @@ function packageApp() {
         });
       });
     }
-    else if (platform === 'linux') {
+    /*else if (platform === 'linux') {
       const archiver = require('archiver');
       return new Promise((resolve, reject) => {
         const tarFile = fs.createWriteStream(packageFile);
@@ -338,7 +338,7 @@ function packageApp() {
         archive.directory(stageDir, path.basename(stageDir));
         archive.finalize();
       });
-    }
+    }*/
     else if (platform === 'win32') {
       const archiver = require('archiver');
       return new Promise((resolve, reject) => {

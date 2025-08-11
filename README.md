@@ -1,9 +1,3 @@
-![Activity Level](https://img.shields.io/badge/status-active-green.svg)
-![Stability](https://img.shields.io/badge/stability-unstable-red.svg)
-![Travis Status](https://travis-ci.org/mozilla/qbrt.svg?branch=master)
-[![Taskcluster Status](https://github.taskcluster.net/v1/repository/mozilla/qbrt/master/badge.svg)](https://github.taskcluster.net/v1/repository/mozilla/qbrt/master/latest)
-[![Greenkeeper Status](https://badges.greenkeeper.io/mozilla/qbrt.svg)](https://greenkeeper.io/)
-
 qbrt: CLI to a Gecko desktop app runtime
 ===
 
@@ -48,12 +42,12 @@ to Gecko's APIs for opening windows and loading web content along with system
 integration APIs for file manipulation, networking, process management, etc.:
 
 ```bash
-git clone https://github.com/mozilla/qbrt.git
+git clone https://github.com/OpenExonaut/qbrt.git
 qbrt run qbrt/example/
 ```
 
 (Another good example is
-the [shell app](https://github.com/mozilla/qbrt/tree/master/shell)
+the [shell app](https://github.com/OpenExonaut/qbrt/tree/master/shell)
 that qbrt uses to load URLs.)
 
 To package an app for distribution, invoke the *package* command,
@@ -77,7 +71,7 @@ you install it, it downloads the latest nightly build of Firefox.
 
 The packaging support is primitive. qbrt creates a shell script (batch script
 on Windows) to launch your app, and it packages your app using
-a platform-specific format (ZIP on Windows, DMG on Mac, and tar/gzip on Linux).
+a platform-specific format (ZIP on Windows, DMG on Mac).
 But it doesn't set icons nor most other package meta-data, and it doesn't create
 auto-installers nor support signing the package.
 
