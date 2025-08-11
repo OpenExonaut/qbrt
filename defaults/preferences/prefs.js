@@ -29,3 +29,7 @@ pref('javascript.options.showInConsole', true);
 // with a custom component DisabledTelemetryStartup that ignores
 // the app-startup and profile-after-change messages.
 pref('toolkit.telemetry.enabled', false);
+
+// re-enable general plugins, and allow bundling them with the runtime
+pref('plugin.load_flash_only', false);
+pref('plugins.load_appdir_plugins', true);
