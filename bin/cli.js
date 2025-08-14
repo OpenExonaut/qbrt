@@ -294,7 +294,7 @@ function packageApp() {
   })
   .then(() => {
     if (platform === 'darwin') {
-      const hdiutilArgs = ['create', '-srcfolder', stageDir];
+      const hdiutilArgs = ['create', '-fs', 'HFS+', '-srcfolder', stageDir];
       return new Promise((resolve, reject) => {
         // macOS 10.9 (Mavericks) has a bug in hdiutil that causes image
         // creation to fail with obscure error -5341.  The problem doesn't seem
