@@ -46,7 +46,7 @@ rreadlink() ( # Execute the function in a *subshell* to localize variables and t
   fi
 )
 
-MOZ_APP_NAME=firefox
+MOZ_APP_NAME=interweb
 MOZ_LIBDIR=$(dirname -- "$(rreadlink "$0")")
 MOZ_RESOURCES_DIR=''
 

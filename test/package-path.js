@@ -64,12 +64,12 @@ new Promise((resolve, reject) => {
   });
 })
 .then(() => {
-  if (process.platform === 'win32') {
+  //if (process.platform === 'win32') {
     const source = 'hello-world.zip';
     const destination = tempDir;
     // return decompress(source, destination);
     return pify(extract)(source, { dir: destination });
-  }
+  /*}
   else if (process.platform === 'darwin') {
     const mountPoint = path.join(tempDir, 'volume');
     return new Promise((resolve, reject) => {
@@ -95,7 +95,7 @@ new Promise((resolve, reject) => {
       tap.equal(code, 0, 'app disk image (.dmg) detached');
     });
   }
-  /*else if (process.platform === 'linux') {
+  else if (process.platform === 'linux') {
     const source = 'hello-world.tgz';
     const destination = tempDir;
     return decompress(source, destination);

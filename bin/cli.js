@@ -89,7 +89,7 @@ function runApp() {
   const options = commandLineArgs(optionDefinitions, { argv: argv, partial: true });
 
   const { installDir, executableDir } = getPlatformDirectories(process.platform);
-  let executable = path.join(executableDir, `firefox${process.platform === 'win32' ? '.exe' : ''}`);
+  let executable = path.join(executableDir, process.platform === 'win32' ? 'firefox.exe' : 'interweb');
   const resourcesDir = process.platform === 'darwin' ? path.join(installDir, 'Contents', 'Resources') : installDir;
   const applicationIni = path.join(resourcesDir, 'qbrt', 'application.ini');
   const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), `${packageJson.name}-profile-`));
@@ -242,8 +242,8 @@ function packageApp() {
     appPackageJson = appPackageResult.pkg;
     appName = appPackageJson.name;
     appVersion = appPackageJson.version;
-    packageFile = `${appName}.` + (appVersion ? `v${appVersion}.` : '') +
-      { win32: 'zip', darwin: 'dmg'/*, linux: 'tgz'*/ }[platform];
+    packageFile = `${appName}.` + (appVersion ? `v${appVersion}.` : '') + 'zip';
+      //{ win32: 'zip', darwin: 'dmg'/*, linux: 'tgz'*/ }[platform];
     cli.spinner(`  Packaging ${options.path} -> ${packageFile} …`);
     return appPackageJson;
   })
@@ -293,7 +293,7 @@ function packageApp() {
     });
   })
   .then(() => {
-    if (platform === 'darwin') {
+    /*if (platform === 'darwin') {
       const hdiutilArgs = ['create', '-fs', 'HFS+', '-srcfolder', stageDir];
       return new Promise((resolve, reject) => {
         // macOS 10.9 (Mavericks) has a bug in hdiutil that causes image
@@ -327,7 +327,7 @@ function packageApp() {
         });
       });
     }
-    /*else if (platform === 'linux') {
+    else if (platform === 'linux') {
       const archiver = require('archiver');
       return new Promise((resolve, reject) => {
         const tarFile = fs.createWriteStream(packageFile);
@@ -338,8 +338,8 @@ function packageApp() {
         archive.directory(stageDir, path.basename(stageDir));
         archive.finalize();
       });
-    }*/
-    else if (platform === 'win32') {
+    }
+    else if (platform === 'win32') {*/
       const archiver = require('archiver');
       return new Promise((resolve, reject) => {
         const zipFile = fs.createWriteStream(packageFile);
@@ -350,7 +350,7 @@ function packageApp() {
         archive.directory(stageDir, path.basename(stageDir));
         archive.finalize();
       });
-    }
+    //}
   })
   .then(() => {
     cli.spinner(chalk.green.bold('✓ ') + `Packaging ${options.path} -> ${packageFile} … done!`, true);

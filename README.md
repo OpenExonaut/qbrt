@@ -13,9 +13,8 @@ Install it via npm:
 npm install -g qbrt
 ```
 
-Installing it also installs a Gecko runtime (currently a nightly build
-of Firefox, but in the future it could be a stable build of Firefox
-or a custom Gecko runtime). Its simplest use is then to invoke the *run*
+Installing it also installs a Gecko runtime (currently Firefox 52.9.0esr for
+Windows or InterWeb for macOS). Its simplest use is then to invoke the *run*
 command with a URL:
 
 ```bash
@@ -66,12 +65,11 @@ also have access to Gecko's APIs.
 
 qbrt doesn't yet support runtime version management (i.e. being able to specify
 which version of Gecko to use, and to switch between them). At the time
-you install it, it downloads the latest nightly build of Firefox.
+you install it, it downloads the a particular Gecko runtime for the platform.
 (You can update that nightly build by reinstalling qbrt.)
 
 The packaging support is primitive. qbrt creates a shell script (batch script
-on Windows) to launch your app, and it packages your app using
-a platform-specific format (ZIP on Windows, DMG on Mac).
+on Windows) to launch your app, and it packages your app into a zip file.
 But it doesn't set icons nor most other package meta-data, and it doesn't create
 auto-installers nor support signing the package.
 

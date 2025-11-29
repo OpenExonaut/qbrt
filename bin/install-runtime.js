@@ -110,7 +110,7 @@ function installRuntime(platform=process.platform) {
         download('https://raw.githubusercontent.com/OpenExonaut/firefox-win32-zip/refs/heads/main/firefox-52.9.0esr.en-US.win32.zip');
       }
       else if (platform == 'darwin') {
-        download('https://download-installer.cdn.mozilla.net/pub/firefox/releases/52.9.0esr/mac/en-US/Firefox%2052.9.0esr.dmg');
+        download('https://github.com/Jazzzny/interweb55-snowleopard/releases/latest/download/InterWeb-32bit.zip');
       }
     });
   })
@@ -126,18 +126,19 @@ function installRuntime(platform=process.platform) {
     });
   })
   .then(() => {
-    if (platform === 'win32') {
+    // if (platform === 'win32') {
       const source = filePath;
       const destination = distDir;
-      return pify(fs.remove)(path.join(destination, 'runtime'))
+      const [oname, nname] = platform === 'darwin' ? ['InterWeb.app', 'Runtime.app'] : ['firefox', 'runtime'];
+      return pify(fs.remove)(path.join(destination, nname))
       .then(() => {
         return decompress(source, destination);
       })
       .then(() => {
-        return pify(fs.rename)(path.join(destination, 'firefox'), path.join(destination, 'runtime'));
+        return pify(fs.rename)(path.join(destination, oname), path.join(destination, nname));
       });
-    }
-    else if (platform === 'darwin') {
+    //}
+    /*else if (platform === 'darwin') {
       return (new Promise((resolve, reject) => {
         const child = spawn(
           'hdiutil',
@@ -189,7 +190,7 @@ function installRuntime(platform=process.platform) {
         }
       });
     }
-    /*else if (platform === 'linux') {
+    else if (platform === 'linux') {
       const source = filePath;
       const destination = distDir;
       return pify(fs.remove)(path.join(destination, 'runtime'))
