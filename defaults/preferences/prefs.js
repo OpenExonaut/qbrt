@@ -30,6 +30,8 @@ pref('javascript.options.showInConsole', true);
 // the app-startup and profile-after-change messages.
 pref('toolkit.telemetry.enabled', false);
 
-// re-enable general plugins, and allow bundling them with the runtime
+// re-enable general plugins, allow bundling them with the runtime,
+// and disable global plugin search
 pref('plugin.load_flash_only', false);
 pref('plugins.load_appdir_plugins', true);
+pref('plugin.scan.plid.all', false);
